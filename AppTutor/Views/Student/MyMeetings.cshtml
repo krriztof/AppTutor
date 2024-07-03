@@ -1,0 +1,32 @@
+﻿@model IEnumerable<AppTutor.Models.TutorSessionViewModel>
+
+<h2>Moje Spotkania</h2>
+
+<div class="meeting-cards">
+    @foreach (var meeting in Model)
+    {
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">@meeting.TeacherName</h5>
+                <p class="card-text">
+                    Data i godzina: @meeting.SessionDateTime.ToString("g")<br>
+                    Status: @(meeting.IsScheduled ? "Zaakceptowane" : "Oczekujące")<br>
+                    Numer telefonu: @meeting.TeacherPhoneNumber<br>
+                    E-mail: @meeting.TeacherEmail
+                </p>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .meeting-cards {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .card {
+        flex: 0 0 30%;
+        margin-right: 15px; 
+        margin-bottom: 20px; 
+    }
+</style>

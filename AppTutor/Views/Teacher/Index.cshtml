@@ -1,0 +1,33 @@
+﻿@model IEnumerable<AppTutor.Models.TutorSessionViewModel>
+
+<h2>Prośby o Spotkania</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Data i godzina spotkania</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var request in Model)
+        {
+            <tr>
+                <td>@(string.IsNullOrEmpty(request.StudentName) ? "Nieznany student" : request.StudentName)</td>
+                <td>@request.SessionDateTime.ToString("g")</td>
+                <td>
+                    <a asp-action="AcceptMeeting" asp-route-sessionId="@request.Id" class="btn btn-success">Akceptuj</a>
+                    <a asp-action="DeclineMeeting" asp-route-sessionId="@request.Id" class="btn btn-danger">Odrzuć</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

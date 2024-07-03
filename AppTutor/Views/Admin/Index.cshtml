@@ -1,0 +1,72 @@
+﻿@model AdminViewModel
+
+<h2>Panel Administratora</h2>
+
+<h3>Nauczyciele do zatwierdzenia</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Imię</th>
+            <th>Nazwisko</th>
+            <th>Numer telefonu</th>
+            <th>Data urodzenia</th>
+            <th>Specjalizacja</th>
+            <th>Dokument</th>
+            <th>Akcje</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var teacher in Model.UnapprovedTeachers)
+        {
+            <tr>
+                <td>@teacher.Email</td>
+                <td>@teacher.FirstName</td>
+                <td>@teacher.LastName</td>
+                <td>@teacher.PhoneNumber</td>
+                <td>@teacher.DateOfBirth.ToShortDateString()</td>
+                <td>@teacher.Specialization</td>
+                <td><a href="@teacher.DocumentPath">Pobierz</a></td>
+                <td>
+                    <form asp-action="ApproveTeacher" asp-route-teacherId="@teacher.Id">
+                        <button type="submit" class="btn btn-success">Akceptuj</button>
+                    </form>
+                    <form asp-action="RejectTeacher" asp-route-teacherId="@teacher.Id">
+                        <button type="submit" class="btn btn-danger">Odrzuć</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+<h3>Umówione spotkania</h3>
+
+@if (Model.ScheduledSessions != null && Model.ScheduledSessions.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nauczyciel</th>
+                <th>Uczeń</th>
+                <th>Data i godzina</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var session in Model.ScheduledSessions)
+            {
+                <tr>
+                    <td>@session.TeacherName</td>
+                    <td>@session.StudentName</td>
+                    <td>@session.SessionDateTime.ToString("g")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Brak zaplanowanych spotkań.</p>
+}

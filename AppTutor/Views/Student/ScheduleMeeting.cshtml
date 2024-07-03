@@ -1,0 +1,27 @@
+﻿@model AppTutor.Models.TeacherViewModel
+
+
+<h2>Umów spotkanie z @Model.Name</h2>
+
+<form asp-action="ScheduleMeeting" asp-controller="Student" method="post">
+    <input type="hidden" name="teacherId" value="@Model.Id" />
+
+    <div class="form-group">
+        <label for="sessionDate">Wybierz datę zajęć:</label>
+        <input type="date" id="sessionDate" name="sessionDate" class="form-control"
+               min="@DateTime.Now.AddDays(1).ToString("yyyy-MM-dd")" required>
+    </div>
+
+    <div class="form-group">
+        <label for="sessionTime">Wybierz godzinę:</label>
+        <select id="sessionTime" name="sessionTime" class="form-control" required>
+            <option value="10:00">10:00</option>
+            <option value="12:00">12:00</option>
+            <option value="14:00">14:00</option>
+            <option value="16:00">16:00</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Umów spotkanie</button>
+</form>
+
